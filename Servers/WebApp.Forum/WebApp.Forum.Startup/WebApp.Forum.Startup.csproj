@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WebApp.Common\WebApp.Common.Application\WebApp.Common.Application.csproj" />
+    <ProjectReference Include="..\WebApp.Forum.Infrastructure\WebApp.Forum.Infrastructure.csproj" />
+    <ProjectReference Include="..\WebApp.Forum.Web\WebApp.Forum.Web.csproj" />
+  </ItemGroup>
+
+</Project>
