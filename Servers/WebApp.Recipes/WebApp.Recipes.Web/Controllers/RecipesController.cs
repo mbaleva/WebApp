@@ -3,6 +3,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using WebApp.Recipes.Application.Commands.Create;
     using WebApp.Recipes.Application.Queries.All;
     using WebApp.Recipes.Application.Queries.GetInfo;
     using WebApp.Recipes.Web.Common;
@@ -26,5 +27,10 @@
         public async Task<ActionResult<AllRecipesQueryOutputModel>> All(
             AllRecipesQuery request) => 
                 await this.mediator.Send(request).ToActionResult();
+
+        [HttpPost]
+        public async Task<ActionResult<CreateRecipeCommandOutputModel>> Create(
+            CreateRecipeCommand request) =>
+            await this.mediator.Send(request).ToActionResult();
     }
 }

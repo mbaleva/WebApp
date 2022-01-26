@@ -7,6 +7,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ContactsComponent } from './contacts/contacts.component';
+import { RecipesModule } from './recipes/recipes.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { ContactsComponent } from './contacts/contacts.component';
     AppRoutingModule,
     SharedModule,
     AuthenticationModule,
-    HttpClientModule
+    HttpClientModule,
+    RecipesModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

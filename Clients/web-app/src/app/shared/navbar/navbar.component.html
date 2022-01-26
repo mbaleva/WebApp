@@ -1,9 +1,14 @@
-<nav>
-    <ul>
-        <li routerLink="/" routerLinkActive="true">Home</li>
-        <li routerLink="/contacts">Contact us</li>
-        <li class="right" routerLink="/auth/login" routerLinkActive="true" *ngIf="!authToken">Login</li>
-        <li class="right" routerLink="/auth/register" routerLinkActive="true" *ngIf="!authToken">Register</li>
-        <li class="right" (click)="logout()" *ngIf="authToken">Logout</li>
-    </ul>
-</nav>
+<ul>
+    <li><a routerLink="/home">Home</a></li>
+    <li><a routerLink="/contacts">Contacts</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">Recipes</a>
+      <div class="dropdown-content">
+        <a routerLink="/recipes/create" *ngIf="authToken">Create new recipe</a>
+        <a routerLink="/recipes/all">All recipes</a>
+      </div>
+    </li>
+    <li class="right"><a routerLink="/login" *ngIf="!authToken">Login</a></li>
+    <li class="right"><a routerLink="/register" *ngIf="!authToken">Register</a></li>
+    <li class="right"><a (click)="logout()" *ngIf="authToken">Logout</a></li>
+  </ul>

@@ -12,6 +12,11 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./authentication/authentication-routing.module')
                           .then(x => x.AuthenticationRoutingModule)
+  },
+  {
+    path: 'recipes',
+    loadChildren: () => import('./recipes/recipes-routing.module')
+                          .then(x => x.RecipesRoutingModule)
   }
 ];
 
