@@ -9,7 +9,11 @@ import { AuthService } from '../auth.service';
 })
 
 export class RegisterComponent { 
-    constructor(private authService: AuthService, private router: Router) { }
+    constructor(private authService: AuthService, private router: Router) { 
+        if(localStorage.getItem('authToken')){
+            this.router.navigateByUrl('');
+        }
+    }
 
     registerSubmitHandler(data: any){
         this.authService.register(data).subscribe(res => {

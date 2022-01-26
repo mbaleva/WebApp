@@ -1,1 +1,9 @@
-<h1>nav works</h1>
+<nav>
+    <ul>
+        <li routerLink="/" routerLinkActive="true">Home</li>
+        <li routerLink="/contacts">Contact us</li>
+        <li class="right" routerLink="/auth/login" routerLinkActive="true" *ngIf="!authToken">Login</li>
+        <li class="right" routerLink="/auth/register" routerLinkActive="true" *ngIf="!authToken">Register</li>
+        <li class="right" (click)="logout()" *ngIf="authToken">Logout</li>
+    </ul>
+</nav>

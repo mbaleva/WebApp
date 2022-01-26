@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class NavbarComponent implements OnInit {
-    authToken: string | null | undefined;
-    constructor() { }
+    authToken: string | null;
+    constructor() {
+        this.authToken = null;
+     }
     ngOnInit() {
         this.getAuthToken();
     }
@@ -17,5 +19,6 @@ export class NavbarComponent implements OnInit {
     }
     logout(): void {
         localStorage.removeItem('authToken');
+        this.authToken = null;
     }
 }
