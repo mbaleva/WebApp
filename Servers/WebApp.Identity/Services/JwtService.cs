@@ -6,8 +6,8 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
     using System.Text;
+    using WebApp.Common.Application;
     using WebApp.Identity.Data.Models;
-    using WebApp.Common;
     public class JwtService : IJwtService
     {
         private readonly ApplicationSettings settings;
@@ -23,7 +23,7 @@
         public string GenerateToken(ApplicationUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.settings.JwtSecret);
+            var key = Encoding.ASCII.GetBytes(this.settings.Secret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -1,5 +1,6 @@
 namespace WebApp.Identity
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -7,8 +8,9 @@ namespace WebApp.Identity
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.IdentityModel.Tokens;
     using System.Text;
-    using WebApp.Common;
+    using WebApp.Common.Application;
     using WebApp.Identity.Data;
     using WebApp.Identity.Data.Models;
     using WebApp.Identity.Services;
@@ -23,28 +25,65 @@ namespace WebApp.Identity
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+
             services
-                 .AddIdentity<ApplicationUser, IdentityRole>(options =>
-                 {
-                     options.Password.RequiredLength = 6;
-                     options.Password.RequireDigit = false;
-                     options.Password.RequireLowercase = false;
-                     options.Password.RequireNonAlphanumeric = false;
-                     options.Password.RequireUppercase = false;
-                 })
+                .AddDbContext<ApplicationDbContext>(options => options
+                    .UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+
+            services
+                .AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            var secret = this.Configuration
+                .GetSection(nameof(ApplicationSettings))
+                .GetValue<string>(nameof(ApplicationSettings.Secret));
 
-                services
-                .AddCoreDependencies<ApplicationDbContext>(this.Configuration)
-                .AddCors(options => options.AddPolicy("Policy", builder =>
+            services
+                .Configure<ApplicationSettings>(this.Configuration
+                    .GetSection(nameof(ApplicationSettings)));
+
+            var key = Encoding.ASCII.GetBytes(secret);
+
+            services
+                .AddAuthentication(authentication =>
                 {
-                     builder.WithOrigins("http://localhost:3000")
-                         .AllowAnyMethod()
-                         .AllowAnyHeader();
-                }))
-                .AddTransient<IJwtService, JwtService>()
-                .AddTransient<IUsersService, UsersService>();
+                    authentication.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authentication.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(bearer =>
+                {
+                    bearer.RequireHttpsMetadata = false;
+                    bearer.SaveToken = true;
+                    bearer.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            services
+                .AddCors(options => 
+                    {
+                        options.AddPolicy("Policy", builder => 
+                        {
+                            builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        });
+                    });
+
+            services.AddScoped<IUsersService, UsersService>();
+            services.AddTransient<IJwtService, JwtService>();
+
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,10 +92,15 @@ namespace WebApp.Identity
             {
                 app.UseDeveloperExceptionPage();
             }
-            app
-                .AddWeb()
-                .UseCors("Policy")
-                .MapEndpoints();
+            app.UseHttpsRedirection()
+                    .UseRouting()
+                    .UseAuthentication()
+                    .UseAuthorization()
+                    .UseCors("Policy")
+                    .UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapControllers();
+                    });
         }
     }
 }
