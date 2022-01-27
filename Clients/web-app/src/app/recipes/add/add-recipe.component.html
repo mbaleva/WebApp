@@ -1,39 +1,61 @@
 <div class="container">
-    <form #f="ngForm" (ngSubmit)="addRecipeSubmitHandler(f.value)">
+    <form [formGroup]="recipeForm" (ngSubmit)="addRecipeSubmitHandler()">
         <div class="row">
             <div class="col-25">
-                <label for="username">Username</label>
+                <label for="name">Name</label>
             </div>
             <div class="col-75">
-                <input type="text" name="username" ngModel>
+                <input type="text" formControlName="name">
             </div>
         </div>
         <div class="row">
             <div class="col-25">
-                <label for="fullName">Full Name</label>
+                <label for="instructions">Instructions</label>
             </div>
             <div class="col-75">
-                <input type="text" name="fullName" ngModel>
+                <input type="text" formControlName="instructions">
             </div>
         </div>
         <div class="row">
             <div class="col-25">
-                <label for="email">Email</label>
+                <label for="preparationTime">Preparation Time </label>
             </div>
             <div class="col-75">
-                <input type="text" name="email" ngModel>
+                <input type="text" formControlName="preparationTime">
             </div>
         </div>
         <div class="row">
             <div class="col-25">
-                <label for="password">Password</label>
+                <label for="cookingTime">Cooking Time</label>
             </div>
             <div class="col-75">
-                <input type="password" name="password" ngModel>
+                <input type="text" formControlName="cookingTime">
             </div>
         </div>
         <div class="row">
-            <input type="submit" value="Login">
+            <div class="col-25">
+                <label for="portionsCount">Portions Count</label>
+            </div>
+            <div class="col-75">
+                <input type="text" formControlName="portionsCount">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="image">Image URL</label>
+            </div>
+            <div class="col-75">
+                <input type="text" formControlName="image">
+            </div>
+        </div>
+        <div class="row">
+            <label for="category">Select category</label>
+            <select class="form-control" formControlName="category">
+              <option *ngFor="let c of categories" [ngValue]="c.id">{{c.name}}</option>
+            </select>
+          </div>
+        <div class="row">
+            <input type="submit" value="Create">
         </div>
     </form>
 </div>

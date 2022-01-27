@@ -1,53 +1,60 @@
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-  }
+a {
+  text-decoration: none;
+}
+
+nav {
+  width: 100%;
+  font-family: monospace;
+}
+
+ul {
+  background: #111;
+  margin: 0;
+  padding-left: 0;
+}
+
+li {
+  color: #fff;
+  background: #111;
+  display: inline-block;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
   
-  li {
-    float: left;
-  }
-  
-  li a, .dropbtn {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  li a:hover, .dropdown:hover .dropbtn {
-    background-color: #111;
-  }
-  
-  li.dropdown {
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-  .dropdown-content a:hover {background-color: #f1f1f1;}
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  .right {
-    float: right;
-  }
+li a {
+  color: #fff;
+}
+
+li:hover {
+  background: red;
+  cursor: pointer;
+}
+
+ul li ul {
+  background: #111;
+  visibility: hidden;
+  opacity: 0;
+  min-width: 5rem;
+  position: absolute;
+  transition: all 0.5s ease;
+  margin-top: 1rem;
+  left: 0;
+  display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+ul li ul li {
+  clear: both;
+  width: 100%;
+}
+.right {
+  float: right;
+}

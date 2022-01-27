@@ -9,6 +9,7 @@
     using WebApp.Common.Infrastructure.Persistence;
     using WebApp.Recipes.Application;
     using WebApp.Recipes.Application.Queries.All;
+    using WebApp.Recipes.Application.Queries.GetAllCategories;
     using WebApp.Recipes.Application.Queries.GetInfo;
     using WebApp.Recipes.Application.Queries.GetMyRecipes;
     using WebApp.Recipes.Domain.Models;
@@ -46,10 +47,7 @@
 
         public Category GetCategory(int id)
         {
-            return this.Data.Recipes.Where(x => x.Id == id)
-                .Include(x => x.Category)
-                .FirstOrDefault()
-                .Category;
+            return this.Data.Categories.Where(x => x.Id == id).FirstOrDefault();
         }
 
         public async Task<RecipeInfoOutputModel> GetDetails(int id)
@@ -89,6 +87,12 @@
                 .Where(x => x.Id != 0)
                .To<RecipeOutputModel>()
                .ToList();
+        }
+
+        public List<GetAllCategoriesOutputModel> GetAllCategories()
+        {
+            return this.Data.Categories.To<GetAllCategoriesOutputModel>()
+                .ToList();
         }
     }
 }

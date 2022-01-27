@@ -7,7 +7,6 @@
     using WebApp.Common.Domain;
     using WebApp.Recipes.Application.Commands.Common;
     using WebApp.Recipes.Domain.Factory.Recipes;
-    using WebApp.Recipes.Domain.Models;
     using WebApp.Recipes.Domain.Repositories;
 
     public class CreateRecipeCommand : BaseRecipeCommand<CreateRecipeCommand>,

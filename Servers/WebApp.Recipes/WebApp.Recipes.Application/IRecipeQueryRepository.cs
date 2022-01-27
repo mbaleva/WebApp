@@ -7,9 +7,11 @@
     using WebApp.Recipes.Application.Queries.All;
     using WebApp.Recipes.Application.Queries.GetMyRecipes;
     using WebApp.Recipes.Domain.Models;
+    using WebApp.Recipes.Application.Queries.GetAllCategories;
 
     public interface IRecipeQueryRepository : IQueryRepository<Recipe>
     {
+        public List<GetAllCategoriesOutputModel> GetAllCategories();
         public Task<RecipeInfoOutputModel> GetDetails(int id);
         public IEnumerable<RecipeOutputModel> GetAllRecipes();
 

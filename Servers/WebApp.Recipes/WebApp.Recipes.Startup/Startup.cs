@@ -22,12 +22,16 @@ namespace WebApp.Recipes.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options => options.AddPolicy("Policy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
+            services
+                .AddCors(options =>
+                {
+                    options.AddPolicy("Policy", builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+                });
             services
                 .AddDomain()
                 .AddApplication(this.Configuration)
@@ -49,8 +53,8 @@ namespace WebApp.Recipes.Startup
                 app.UseDeveloperExceptionPage();
             }
             app
-                .AddWeb()
-                .UseCors("Policy");
+                .UseCors("Policy")
+                .AddWeb();
         }
     }
 }

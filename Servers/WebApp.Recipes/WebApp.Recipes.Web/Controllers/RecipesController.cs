@@ -2,9 +2,11 @@
 {
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using WebApp.Recipes.Application.Commands.Create;
     using WebApp.Recipes.Application.Queries.All;
+    using WebApp.Recipes.Application.Queries.GetAllCategories;
     using WebApp.Recipes.Application.Queries.GetInfo;
     using WebApp.Recipes.Web.Common;
 
@@ -14,10 +16,8 @@
         private readonly IMediator mediator;
 
         public RecipesController(
-            IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+            IMediator mediator) => this.mediator = mediator;
+
         [HttpGet]
         public async Task<ActionResult<RecipeInfoOutputModel>> GetInfo(
             RecipeInfoQuery request) =>
@@ -30,7 +30,11 @@
 
         [HttpPost]
         public async Task<ActionResult<CreateRecipeCommandOutputModel>> Create(
-            CreateRecipeCommand request) =>
+            [FromBody]CreateRecipeCommand request) =>
+            await this.mediator.Send(request).ToActionResult();
+
+        public async Task<ActionResult<List<GetAllCategoriesOutputModel>>> GetAllCategories(
+            GetAllCategoriesQuery request) =>
             await this.mediator.Send(request).ToActionResult();
     }
 }
