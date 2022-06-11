@@ -33,6 +33,7 @@
             [FromBody]CreateRecipeCommand request) =>
             await this.mediator.Send(request).ToActionResult();
 
+        [HttpGet]
         public async Task<ActionResult<List<GetAllCategoriesOutputModel>>> GetAllCategories(
             GetAllCategoriesQuery request) =>
             await this.mediator.Send(request).ToActionResult();

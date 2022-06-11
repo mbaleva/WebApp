@@ -10,6 +10,7 @@
     using WebApp.Common.Application;
     using WebApp.Common.Domain;
     using WebApp.Recipes.Infrastructure.Persistence;
+    using Swashbuckle;
 
     public static class InfrastructureConfig
     {
@@ -18,6 +19,7 @@
             IConfiguration configuration) 
         {
             services
+                .AddSwaggerGen()
                 .AddDatabase(configuration)
                 .AddRepositories()
                 .AddJwt(configuration);
@@ -81,6 +83,11 @@
         public static IApplicationBuilder AddWeb(
             this IApplicationBuilder app) =>
                 app.UseHttpsRedirection()
+                    .UseSwagger()
+                    .UseSwaggerUI(options => 
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recipes API");
+                    })
                     .UseRouting()
                     .UseAuthentication()
                     .UseAuthorization()
