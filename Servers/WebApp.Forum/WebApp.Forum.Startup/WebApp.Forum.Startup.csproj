@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\WebApp.Common\WebApp.Common.Application\WebApp.Common.Application.csproj" />
     <ProjectReference Include="..\WebApp.Forum.Infrastructure\WebApp.Forum.Infrastructure.csproj" />
     <ProjectReference Include="..\WebApp.Forum.Web\WebApp.Forum.Web.csproj" />
