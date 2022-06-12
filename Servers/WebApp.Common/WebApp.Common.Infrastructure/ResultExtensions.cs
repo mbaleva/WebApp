@@ -1,4 +1,4 @@
-﻿namespace WebApp.Recipes.Web.Common
+﻿namespace WebApp.Common.Infrastructure
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;

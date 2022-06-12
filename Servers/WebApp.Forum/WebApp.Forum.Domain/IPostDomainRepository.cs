@@ -4,7 +4,7 @@
     using WebApp.Common.Domain;
     using WebApp.Forum.Domain.Models;
 
-    public interface IDomainPostRepository : IDomainRepository<Post>
+    public interface IPostDomainRepository : IDomainRepository<Post>
     {
         Category GetCategory(int categoryId);
 

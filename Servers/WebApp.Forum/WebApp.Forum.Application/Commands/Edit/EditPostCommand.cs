@@ -10,9 +10,9 @@
     {
         public class EditPostCommandHandler : IRequestHandler<EditPostCommand, BasePostOutputModel>
         {
-            private IDomainPostRepository repository;
+            private IPostDomainRepository repository;
 
-            public EditPostCommandHandler(IDomainPostRepository repository)
+            public EditPostCommandHandler(IPostDomainRepository repository)
             {
                 this.repository = repository;
             }

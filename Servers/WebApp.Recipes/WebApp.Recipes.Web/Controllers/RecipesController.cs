@@ -8,34 +8,29 @@
     using WebApp.Recipes.Application.Queries.All;
     using WebApp.Recipes.Application.Queries.GetAllCategories;
     using WebApp.Recipes.Application.Queries.GetInfo;
-    using WebApp.Recipes.Web.Common;
+    using WebApp.Common.Infrastructure;
 
     [Route("/api/[controller]/[action]")]
     public class RecipesController : ApiController
     {
-        private readonly IMediator mediator;
-
-        public RecipesController(
-            IMediator mediator) => this.mediator = mediator;
-
         [HttpGet]
         public async Task<ActionResult<RecipeInfoOutputModel>> GetInfo(
             RecipeInfoQuery request) =>
-                await this.mediator.Send(request).ToActionResult();
+                await this.Send(request);
 
         [HttpGet]
         public async Task<ActionResult<AllRecipesQueryOutputModel>> All(
-            AllRecipesQuery request) => 
-                await this.mediator.Send(request).ToActionResult();
+            AllRecipesQuery request) =>
+                await this.Send(request);
 
         [HttpPost]
         public async Task<ActionResult<CreateRecipeCommandOutputModel>> Create(
             [FromBody]CreateRecipeCommand request) =>
-            await this.mediator.Send(request).ToActionResult();
+            await this.Send(request);
 
         [HttpGet]
         public async Task<ActionResult<List<GetAllCategoriesOutputModel>>> GetAllCategories(
             GetAllCategoriesQuery request) =>
-            await this.mediator.Send(request).ToActionResult();
+            await this.Send(request);
     }
 }

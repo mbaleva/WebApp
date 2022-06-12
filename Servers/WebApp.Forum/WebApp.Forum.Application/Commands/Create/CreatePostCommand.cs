@@ -15,11 +15,11 @@
         {
             private IPostFactory factory;
             private ICurrentUser currentUser;
-            private IDomainPostRepository repository;
+            private IPostDomainRepository repository;
             public CreatePostCommandHandler(
                 IPostFactory factory,
                 ICurrentUser user,
-                IDomainPostRepository repository)
+                IPostDomainRepository repository)
             {
                 this.factory = factory;
                 this.currentUser = user;
