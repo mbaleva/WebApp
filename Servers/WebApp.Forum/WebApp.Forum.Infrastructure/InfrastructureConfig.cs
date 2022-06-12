@@ -10,6 +10,8 @@
     using System.Text;
     using WebApp.Common.Application;
     using WebApp.Common.Domain;
+    using WebApp.Common.Infrastructure;
+    using WebApp.Forum.Domain.Models;
     using WebApp.Forum.Infrastructure.Persistence;
 
     public static class InfrastructureConfig
@@ -19,6 +21,7 @@
                IConfiguration configuration)
         {
             services
+                .AddSwaggerGen()
                 .AddDatabase(configuration)
                 .AddRepositories()
                 .AddJwt(configuration);
@@ -68,12 +71,14 @@
         private static IServiceCollection AddRepositories(
             this IServiceCollection services)
         {
+            bool isAssignableDomain = 
+                typeof(PostRepository).IsAssignableTo(typeof(IDomainRepository<>));
+            bool isAssignableQuery = typeof(PostRepository).IsAssignableTo(typeof(IQueryRepository<>));
             services
                 .Scan(scan => scan
-                    .FromCallingAssembly()
+                    .FromAssemblyOf<ForumDbContext>()
                     .AddClasses(classes => classes
-                        .AssignableTo(typeof(IDomainRepository<>))
-                        .AssignableTo(typeof(IQueryRepository<>)))
+                        .WithAttribute(typeof(RepositoryAttribute)))
                     .AsImplementedInterfaces()
                     .WithScopedLifetime());
 
@@ -82,6 +87,11 @@
         public static IApplicationBuilder AddWeb(
             this IApplicationBuilder app) =>
                 app.UseHttpsRedirection()
+                    .UseSwagger()
+                    .UseSwaggerUI(options =>
+                    {
+                        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Recipes API");
+                    })
                     .UseRouting()
                     .UseAuthentication()
                     .UseAuthorization()

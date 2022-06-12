@@ -1,11 +1,11 @@
-﻿namespace WebApp.Recipes.Web
+﻿namespace WebApp.Common.Infrastructure
 {
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using System.Threading.Tasks;
     using WebApp.Common.Application;
-    using WebApp.Recipes.Web.Common;
+    using WebApp.Common.Infrastructure;
 
     public class ApiController : ControllerBase
     {

@@ -11,10 +11,10 @@
     {
         public class DeletePostCommandHandler : IRequestHandler<DeletePostCommand, Result>
         {
-            private IDomainPostRepository repository;
+            private IPostDomainRepository repository;
 
             public DeletePostCommandHandler(
-                IDomainPostRepository repository)
+                IPostDomainRepository repository)
             {
                 this.repository = repository;
             }

@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using WebApp.Common.Application.Mapping;
+    using WebApp.Common.Infrastructure;
     using WebApp.Common.Infrastructure.Persistence;
     using WebApp.Forum.Application;
     using WebApp.Forum.Application.Queries.All;
@@ -12,12 +13,13 @@
     using WebApp.Forum.Domain.Models;
     using WebApp.Forum.Infrastructure.Persistence;
 
-    internal class PostsRepository : DataRepository<ForumDbContext, Post>,
-        IDomainPostRepository, IPostQueryRepository
+    [Repository]
+    internal class PostRepository : DataRepository<ForumDbContext, Post>,
+        IPostDomainRepository, IPostQueryRepository
     {
         private ForumDbContext context;
 
-        public PostsRepository(ForumDbContext db) : base(db)
+        public PostRepository(ForumDbContext db) : base(db)
         {
         }
 
